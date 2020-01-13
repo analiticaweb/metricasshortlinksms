@@ -3,7 +3,6 @@ const axios = require("axios");
 const shortLink = async (dataArray) => {
     // var flag = true
     var dataList = await dataArray.map((item) => {
-
         let dataEncode = Buffer.from(JSON.stringify({
             email: item.email,
             campaign: item.campaign,
@@ -33,9 +32,18 @@ const shortLink = async (dataArray) => {
     })
 
     Promise.all(dataList).then(results => {
-        console.log(results);
+        // console.log(results);
+        exportCSV(results)
     })
 }
+
+const exportCSV = (results) => {
+    console.log("urlApiCRM,email,campaign,destiny,shortURL");
+    results.forEach(element => {
+        console.log(element.urlApiCRM + "," + element.email + "," + element.campaign + "," + element.destiny + "," + element.shortURL);
+    });
+}
+
 
 module.exports = {
     shortLink
